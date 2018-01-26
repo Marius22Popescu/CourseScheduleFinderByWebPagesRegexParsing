@@ -66,14 +66,15 @@ public class CourseScheduleFinderBC {
 	    in.close();
 	  	
 	  //Create a pattern, check and display the desired course information
-	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"</span> <span class=\"courseTitle\">(.*)</span>"); // $.*^Item number: </span>(.*)</span>", Pattern.DOTALL);
+	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"</span> <span class=\"courseTitle\">(.*)</span>"
+	    	+ "[\\S\\s]*Item number: </span>(.*)</span>[\\S\\s]*<a href=\"https://www.bellevuecollege.edu/directory/.*\">(.*)</a>");
 	    matcher = pattern.matcher(text);
 	    while(matcher.find()) {
 	    		System.out.println("=============================================================");
 	    		System.out.println("Code: "+courseID);
 	    		System.out.println( "Title: " +matcher.group(1));
-	    		System.out.println( "Item#: " ); //+matcher.group(2)
-	    		System.out.println( "Instructor: " );  //+matcher.group(3)
+	    		System.out.println( "Item#: " +matcher.group(2)); 
+	    		System.out.println( "Instructor: " +matcher.group(3));  
 	    		System.out.println( "Days: " );  //+matcher.group(4)
 	    		System.out.println("=============================================================");
 	    }	  		
