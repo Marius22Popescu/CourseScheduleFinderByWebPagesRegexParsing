@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 //Assignment 1 - Programming Languages - 01/20/2018
 //Student: Marius Popescu
-//Instructor: Fatama Serce
+//Instructor: Fatma Serce
 //Description: This program will provide the user with the course schedule for a particular course
 //in a given program at Bellevue College.
 
@@ -67,7 +67,7 @@ public class CourseScheduleFinderBC {
 	  	
 	  //Create a pattern, check and display the desired course information
 	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"</span> <span class=\"courseTitle\">(.*)</span>"
-	    	+ "[\\S\\s]*Item number: </span>(.*)</span>[\\S\\s]*<a href=\"https://www.bellevuecollege.edu/directory/.*\">(.*)</a>");
+	    	+ "[\\S\\s]*?Item number: </span>(.*)</span>[\\S\\s]*?<a href=\"https://www.bellevuecollege.edu/directory/.*\">(.*)</a>");
 	    matcher = pattern.matcher(text);
 	    while(matcher.find()) {
 	    		System.out.println("=============================================================");
