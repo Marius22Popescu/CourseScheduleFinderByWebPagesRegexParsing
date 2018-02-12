@@ -66,19 +66,33 @@ public class CourseScheduleFinderBC {
 	    in.close();
 	  	
 	  //Create a pattern, check and display the desired course information
-	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"</span> <span class=\"courseTitle\">(.*)</span>"
-	    	+ "[\\S\\s]*?Item number: </span>(.*)</span>[\\S\\s]*?<a href=\"https://www.bellevuecollege.edu/directory/.*\">(.*)</a>"
-	    	+ "[\\S\\s]*?<span class=\"days online\">(.*)?</span>[\\S\\s]*?<abbr title=\"(.*)?\">");
+	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"[\\s\\S]*?Item number: </span>(\\d*)</span>[\\s\\S]*?"
+	            + "<a href.*?>(.*)</a>[\\s\\S]*?(<ul class=\"meets\">[\\s\\S]*?</ul>)");
 	    matcher = pattern.matcher(text);
 	    while(matcher.find()) {
 	    		System.out.println("=============================================================");
 	    		System.out.println("Code: "+ courseID);
-	    		System.out.println( "Title: " + matcher.group(1));
-	    		System.out.println( "Item#: " + matcher.group(2)); 
-	    		System.out.println( "Instructor: " + matcher.group(3)); 
-	    		System.out.println( "Days: " + matcher.group(4)); 
-	    		//System.out.println( "Days: " + matcher.group(5));
-	    		System.out.println("=============================================================");
+	    		System.out.println( "Title: " + programName);
+	    		System.out.println( "Item#: " + matcher.group(1)); 
+	    		System.out.println( "Instructor: " + matcher.group(2)); 
+	    		//Copy the group 3 in a string in order to get the days 
+	    		String days = matcher.group(3);
+	    		//Create a new pattern and matcher in order to get the days
+	        Pattern daysPatt = Pattern.compile("<span class=\"days online\">(.*)</span>");
+	        Matcher daysMatch = daysPatt.matcher(days);
+	        		if (daysMatch.find()) {
+	        			//online classes case
+	                   System.out.println("Days: " + daysMatch.group(1));
+	        				} 
+	        		else {
+	        			//other classes case
+	                	   daysPatt = Pattern.compile("<abbr title=\"(.*)\">");
+	                    daysMatch = daysPatt.matcher(days);
+	                    while (daysMatch.find()) {
+	                    System.out.println("Days: " + daysMatch.group(1));
+	                    }
+	                }
+	        System.out.println("=============================================================");  		
 	    }	  		
 	}	
 }
