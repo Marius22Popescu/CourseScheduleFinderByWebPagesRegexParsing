@@ -78,20 +78,22 @@ public class CourseScheduleFinderBC {
 	    		//Copy the group 3 in a string in order to get the days 
 	    		String days = matcher.group(3);
 	    		//Create a new pattern and matcher in order to get the days
-	        Pattern daysPatt = Pattern.compile("<td>[\\s\\S]*?(.*)[\\s\\S]*?</td>");
-	        Matcher daysMatch = daysPatt.matcher(days);
-	        		if (daysMatch.find()) {
-	        			//online classes case
-	                   System.out.println("Days: " + daysMatch.group(1));
-	        				} 
-	        		else {
-	        			//other classes case
-	                	   daysPatt = Pattern.compile("<abbr title=\"(.*)\">");
-	                    daysMatch = daysPatt.matcher(days);
-	                    while (daysMatch.find()) {
-	                    System.out.println("Days: " + daysMatch.group(1));
-	                    }
-	                }
+	    		
+	        	Pattern daysPatt = Pattern.compile("<abbr title=\"(.*)\">");
+	    	    Matcher daysMatch = daysPatt.matcher(days);
+	    	        		if (daysMatch.find()) {	
+	    	        			//other classes case
+	    		                   System.out.println("Days: " + daysMatch.group(1));
+	    		        				} 
+	    		        		else {
+	    		        			//online classes case
+	    		                	   daysPatt = Pattern.compile("<td>[\\s\\S]*?(\\w*)[\\s\\S]*?</td>");
+	    		                    daysMatch = daysPatt.matcher(days);
+	    		                    while (daysMatch.find()) {
+	    		                    System.out.println("Days: Online");
+	    		                    }
+	    		                }
+	    	        		
 	        System.out.println("=============================================================");  		
 	    }	  		
 	}	
