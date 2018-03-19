@@ -66,8 +66,8 @@ public class CourseScheduleFinderBC {
 	    in.close();
 	  	
 	  //Create a pattern, check and display the desired course information
-	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"[\\s\\S]*?Item number: </span>(\\d*)</span>[\\s\\S]*?"
-	            + "<a href.*?>(.*)</a>[\\s\\S]*?(<ul class=\"meets\">[\\s\\S]*?</ul>)");
+	    pattern = Pattern.compile("<span class=\"courseID\">"+courseID+"[\\s\\S]*?scope=\"rowgroup\" class=\"nowrap\">(\\d*)</th>[\\s\\S]*?"
+	            + "<a href=.*?>(.*)</a>[\\s\\S]*?(</td>[\\s\\S]*?</td>)");
 	    matcher = pattern.matcher(text);
 	    while(matcher.find()) {
 	    		System.out.println("=============================================================");
@@ -78,7 +78,7 @@ public class CourseScheduleFinderBC {
 	    		//Copy the group 3 in a string in order to get the days 
 	    		String days = matcher.group(3);
 	    		//Create a new pattern and matcher in order to get the days
-	        Pattern daysPatt = Pattern.compile("<span class=\"days online\">(.*)</span>");
+	        Pattern daysPatt = Pattern.compile("<td>[\\s\\S]*?(.*)[\\s\\S]*?</td>");
 	        Matcher daysMatch = daysPatt.matcher(days);
 	        		if (daysMatch.find()) {
 	        			//online classes case
